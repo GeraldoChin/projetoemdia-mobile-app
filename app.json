@@ -1,0 +1,25 @@
+{
+  "expo": {
+    "name": "ProjetoEmDia",
+    "slug": "projetoemdia",
+    "scheme": "projetoemdia",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "backgroundColor": "#F8F9FB",
+    "ios": { "supportsTablet": false, "bundleIdentifier": "co.mz.projetoemdia" },
+    "android": {
+      "package": "co.mz.projetoemdia",
+      "softwareKeyboardLayoutMode": "resize",
+      "backgroundColor": "#F8F9FB"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-secure-store",
+      "expo-font",
+      ["expo-image-picker", { "photosPermission": "Permite escolher uma foto para o teu perfil." }]
+    ],
+    "experiments": { "typedRoutes": true }
+  }
+}
