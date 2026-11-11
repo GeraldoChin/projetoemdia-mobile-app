@@ -31,28 +31,34 @@ Utilizador de teste (depois de `docker compose exec api npx prisma db seed`): `s
 
 ## Estrutura
 
-```
-app/                           Rotas (Expo Router)
-  _layout.tsx                  Providers (Query, Auth, Toast), fontes Inter, splash
-  (auth)/login.tsx             Entrar / Criar Conta
-  (tabs)/_layout.tsx           Barra inferior flutuante (4 separadores) + guarda de sessão
-  (tabs)/index.tsx             Início          → GET /dashboard/home
-  (tabs)/projects.tsx          Projectos        → GET /projects
-  (tabs)/tasks.tsx             Tarefas          → GET /tasks
-  (tabs)/profile.tsx           Perfil           → GET /users/me
-  project/[id].tsx             Detalhes do Projecto
-  task/[id].tsx                Detalhe da Tarefa (+ comentários)
-  notifications.tsx            Notificações (sino)
+```text
+app/                           Rotas Expo Router e layouts de navegação
+  (auth)/                      Entrada, registo e layout de autenticação
+  (tabs)/                      Separadores Início, Projectos, Tarefas e Perfil
+  project/[id].tsx             Rota para detalhes do projecto
+  task/[id].tsx                Rota para detalhes da tarefa
+  calendar.tsx, team.tsx, ...  Rotas para os restantes ecrãs
+
 src/
-  theme/                       Tokens de design (cores, tipografia Inter, raios, sombras)
-  api/                         client.ts (axios + refresh), hooks.ts (queries/mutations), types.ts, config.ts
-  auth/                        AuthProvider (sessão), tokenStore (SecureStore)
-  components/                  Text, Icon, primitives (Card, Badge, Chip, Button, Avatar, ProgressRing...),
-                               BottomSheet, Toast, forms (TextField, DateField, SelectField...), headers
-  features/                    cards (ProjectCard, TaskCard), TaskFormSheet, ProjectSheets, ProfileSheets, StatusSheet
-  utils/                       format (datas pt-MZ), labels (estados e prioridades)
+  screens/                      Ecrãs organizados por domínio
+    auth/                       LoginScreen
+    dashboard/                  HomeScreen
+    projects/                   ProjectsScreen, ProjectDetailScreen
+    tasks/                      TasksScreen, TaskDetailScreen
+    profile/, team/, calendar/  Ecrãs de perfil e utilitários
+    stats/, help/, terms/       Estatísticas e informação
+  features/                     Fluxos e componentes específicos
+    projects/                   Formulários de projecto e convite
+    tasks/                      Formulário de tarefa e estado
+    profile/                    Edição de perfil e palavra-passe
+  components/                   Peças reutilizáveis: texto, botões, cartões, formulários
+  api/                          Cliente HTTP, hooks de dados e tipos
+  auth/                         Sessão e armazenamento de tokens
+  theme/                        Cores, tipografia, espaçamentos e sombras
+  utils/                        Formatação de datas e etiquetas
 ```
 
+Os ficheiros em `app/` mantêm apenas a rota Expo Router e encaminham para o ecrã correspondente em `src/screens/`. Coloque a lógica visual do ecrã na pasta do seu domínio; deixe em `src/components/` apenas elementos reutilizados e em `src/features/` os fluxos específicos de cada área.
 ## Como funciona
 
 - **Sessão:** `accessToken` (15 min) e `refreshToken` ficam no SecureStore (se "Lembrar de mim" estiver ligado). Quando um pedido dá `401`, o interceptor do axios chama `/auth/refresh` **uma só vez** (mesmo com vários pedidos em simultâneo) e repete o pedido. Se falhar, a sessão termina e a app volta ao login.
