@@ -19,7 +19,7 @@ export default function TermsScreen() {
     <View style={{ flex: 1 }}>
       <AppHeader title="Termos e Privacidade" />
       <ScrollView contentContainerStyle={{ paddingHorizontal: spacing.screen, paddingBottom: 130, gap: 12 }}>
-        <Text variant="headlineLg">Termos de utilização e privacidade</Text>
+        <Text variant="headlineLg">Termos de utilizacao e privacidade</Text>
         <Text variant="bodySm" color={colors.onSurfaceVariant}>Resumo informativo do funcionamento actual do ProjetoEmDia.</Text>
         {sections.map(([title, body]) => <Card key={title} style={{ gap: 6 }}><Text variant="labelLg">{title}</Text><Text variant="bodyMd" color={colors.onSurfaceVariant}>{body}</Text></Card>)}
       </ScrollView>

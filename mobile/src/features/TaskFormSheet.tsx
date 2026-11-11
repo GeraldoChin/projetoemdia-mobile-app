@@ -141,6 +141,9 @@ export function TaskFormSheet({ visible, onClose, task, projectId, onSaved }: Pr
         <Text variant="bodySm" color={colors.onSurfaceVariant}>
           {project.isLoading ? 'A verificar permissões…' : 'Só o líder que criou o projecto pode adicionar uma nova tarefa.'}
         </Text>
-      ) : <Button label={editing ? 'Guardar alterações' : 'Criar tarefa'} trailingIcon="check" onPress={submit} loading={saving} />}    </BottomSheet>
+      ) : (
+        <Button label={editing ? 'Guardar alterações' : 'Criar tarefa'} trailingIcon="check" onPress={submit} loading={saving} />
+      )}
+    </BottomSheet>
   );
 }

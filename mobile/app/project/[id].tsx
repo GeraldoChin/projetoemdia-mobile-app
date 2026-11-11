@@ -203,9 +203,9 @@ export default function ProjectDetailScreen() {
         ) : null}
       </ScrollView>
 
-      {p && isOwner ? (
+      {p ? (
         <View pointerEvents="box-none" style={[styles.bottom, { paddingBottom: Math.max(insets.bottom, 16) }]}>
-          <Pressable onPress={() => setAddingTask(true)} style={({ pressed }) => [styles.addTask, shadow.float, pressed && { transform: [{ scale: 0.98 }] }]}>
+          <Pressable onPress={() => isOwner ? setAddingTask(true) : Alert.alert('Adicionar tarefa', 'Só o líder que criou o projecto pode adicionar uma nova tarefa.')} style={({ pressed }) => [styles.addTask, shadow.float, pressed && { transform: [{ scale: 0.98 }] }]}>
             <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
               <Icon name="add-task" size={20} color={colors.onPrimary} />
               <Text variant="headlineSm" color={colors.onPrimary}>Adicionar Tarefa</Text>
