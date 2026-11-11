@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<!--
+  ECRÃ 02 — Início
+  Tipo Stitch: mobile_tab (cabeçalho fixo + barra inferior com 4 separadores; activo: Início)
+  Captura: ../screenshots/02-inicio.png
+  Interacção: tocar numa tarefa de "Tarefas para Hoje" alterna concluída/pendente e actualiza o contador
+  Nota: as imagens de avatar são URLs externos do Stitch e podem expirar. O logótipo é provisório (../assets/logo.svg).
+-->
+<html lang="pt"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+<link href="../design/base.css" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="../design/tailwind-config.js"></script></head>
+<body class="bg-surface font-body-md text-on-surface antialiased flex flex-col min-h-screen">
+<!-- Cabeçalho fixo -->
+<header class="fixed top-0 w-full z-50 bg-surface/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.03)] pt-safe"><div class="h-16 px-margin flex items-center justify-between"><div class="flex items-center gap-space-sm"><img alt="ProjetoEmDia Logo" class="h-8 w-auto object-contain" src="../assets/logo.svg"/><div class="flex flex-col"><span class="font-label-sm text-label-sm text-secondary uppercase tracking-wider leading-none">ProjetoEmDia</span><span class="font-headline-sm text-headline-sm text-on-surface leading-tight">Início</span></div></div><div class="flex items-center gap-space-xs"><button aria-label="Notificações" class="relative w-11 h-11 flex items-center justify-center rounded-full text-on-surface-variant hover:bg-surface-container-high transition-colors" type="button"><span class="material-symbols-outlined text-[22px]">notifications</span><span class="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-error ring-2 ring-surface"></span></button><div class="flex items-center justify-center p-0.5"><img alt="Profile" class="w-8 h-8 rounded-full object-cover ring-1 ring-outline-variant/30" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCidvjPYVlsiDeaywQTZ5ZaV-sUP8OsXyF9fTnfUyPhpAVEHSdrRt9SKDsbjXGXIWSWBE6plD8lXd0KQzGlSUsFGiG7uhfg85LjLmDiaVwvTGdUIFwCIiS-bvLMAKsnZ9TliiC9dlXTOEXm6fqKH47N3aKDmZEyu4xUxf4b_hor0F8aHwc9azhf3roK1J8aKhTZBUXnzqd1ok5GX8JUpgoMZ_nHHYZ9S-QAm1psUibi"/></div></div></div></header>
+<main class="flex flex-col relative w-full pt-16 pb-28 bg-surface px-margin min-h-screen"><div class="flex flex-col w-full gap-space-lg">
+<!-- Saudação -->
+<div class="flex items-center justify-between pt-1">
+<div class="flex items-center gap-space-sm">
+<div class="relative">
+<img alt="Samira Nguenha" class="w-12 h-12 rounded-full object-cover shadow-sm ring-0" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCidvjPYVlsiDeaywQTZ5ZaV-sUP8OsXyF9fTnfUyPhpAVEHSdrRt9SKDsbjXGXIWSWBE6plD8lXd0KQzGlSUsFGiG7uhfg85LjLmDiaVwvTGdUIFwCIiS-bvLMAKsnZ9TliiC9dlXTOEXm6fqKH47N3aKDmZEyu4xUxf4b_hor0F8aHwc9azhf3roK1J8aKhTZBUXnzqd1ok5GX8JUpgoMZ_nHHYZ9S-QAm1psUibi"/>
+<span class="absolute bottom-0 right-0 w-3 h-3 rounded-full bg-secondary-container"></span>
+</div>
+<div class="flex flex-col">
+<span class="font-body-sm text-body-sm text-on-surface-variant flex items-center gap-1">Bom dia <span class="inline-block animate-pulse text-xs">✨</span></span>
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">Samira Nguenha</h1>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<button aria-label="Calendário" class="w-10 h-10 rounded-full bg-surface-container-lowest shadow-sm flex items-center justify-center text-primary transition-transform active:scale-95" type="button"><span class="material-symbols-outlined text-[20px]">calendar_today</span></button>
+<div class="px-2.5 py-1 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-md text-label-md flex items-center gap-1 shadow-sm"><span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>Maputo</div>
+</div>
+</div>
+<!-- Cartão de destaque (azul-marinho #102B4E) -->
+<div class="relative overflow-hidden rounded-xl bg-primary-container text-on-primary p-5 shadow-md flex flex-col gap-4">
+<div class="absolute -right-12 -top-12 w-44 h-44 rounded-full bg-secondary-container/10 pointer-events-none blur-2xl"></div>
+<div class="absolute -left-12 -bottom-12 w-40 h-40 rounded-full bg-primary-fixed/5 pointer-events-none blur-xl"></div>
+<div class="flex items-start justify-between relative z-10">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-1.5">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-label-sm font-label-sm bg-error-container text-on-error-container">Urgente</span>
+<span class="font-label-md text-label-md text-on-primary-container uppercase tracking-wider">Próxima entrega prioritária</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-on-primary font-semibold mt-1">Relatório Trimestral de Impacto</h2>
+</div>
+<div class="w-9 h-9 rounded-full bg-surface-container-lowest/10 backdrop-blur-md flex items-center justify-center text-secondary-fixed"><span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">flag</span></div>
+</div>
+<div class="flex items-center justify-between pt-1 relative z-10">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-lg bg-surface-container-lowest/15 flex items-center justify-center text-secondary-fixed"><span class="material-symbols-outlined text-[18px]">event</span></div>
+<div class="flex flex-col"><span class="font-label-sm text-label-sm text-on-primary-container">Prazo limite</span><span class="font-label-lg text-label-lg text-on-primary font-medium">14 de Junho, 2025</span></div>
+</div>
+<!-- Anel de progresso (SVG, 78%) -->
+<div class="flex items-center gap-2.5">
+<div class="relative w-12 h-12 flex items-center justify-center">
+<svg class="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
+<path class="text-surface-container-highest/20" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3.5"></path>
+<path class="text-secondary-fixed" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="78, 100" stroke-linecap="round" stroke-width="3.5"></path>
+</svg>
+<span class="absolute font-label-md text-label-md text-on-primary font-semibold">78%</span>
+</div>
+<button aria-label="Abrir entrega" class="w-8 h-8 rounded-full bg-secondary-fixed text-on-secondary-fixed flex items-center justify-center shadow-sm active:scale-95 transition-transform" type="button"><span class="material-symbols-outlined text-[18px]">arrow_forward</span></button>
+</div>
+</div>
+</div>
+<!-- Resumo de Actividades -->
+<div class="flex flex-col gap-2.5">
+<div class="flex items-center justify-between">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Resumo de Actividades</h3>
+<span class="font-label-sm text-label-sm text-secondary font-medium">Esta Semana</span>
+</div>
+<div class="grid grid-cols-3 gap-2.5">
+<div class="bg-surface-container-lowest p-3.5 rounded-xl shadow-sm flex flex-col justify-between gap-3">
+<div class="w-8 h-8 rounded-full bg-secondary-fixed flex items-center justify-center text-on-secondary-fixed"><span class="material-symbols-outlined text-[18px]">folder_open</span></div>
+<div class="flex flex-col"><span class="font-display-sm text-display-sm text-primary leading-tight">04</span><span class="font-label-sm text-label-sm text-on-surface-variant mt-0.5">Projectos Activos</span></div>
+</div>
+<div class="bg-surface-container-lowest p-3.5 rounded-xl shadow-sm flex flex-col justify-between gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center text-on-surface-variant"><span class="material-symbols-outlined text-[18px]">pending_actions</span></div>
+<div class="flex flex-col"><span class="font-display-sm text-display-sm text-primary leading-tight">12</span><span class="font-label-sm text-label-sm text-on-surface-variant mt-0.5">Pendentes</span></div>
+</div>
+<div class="bg-secondary-fixed p-3.5 rounded-xl shadow-sm flex flex-col justify-between gap-3 text-on-secondary-fixed">
+<div class="flex items-center justify-between">
+<div class="w-8 h-8 rounded-full bg-surface-container-lowest flex items-center justify-center text-secondary"><span class="material-symbols-outlined text-[18px]">task_alt</span></div>
+<span class="font-label-sm text-label-sm text-secondary font-semibold">+15%</span>
+</div>
+<div class="flex flex-col"><span class="font-display-sm text-display-sm text-on-secondary-fixed leading-tight">28</span><span class="font-label-sm text-label-sm text-on-secondary-fixed-variant mt-0.5">Feitas</span></div>
+</div>
+</div>
+</div>
+<!-- Acesso Rápido -->
+<div class="flex flex-col gap-2.5">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Acesso Rápido</h3>
+<div class="grid grid-cols-4 gap-2">
+<button class="group flex flex-col items-center gap-1.5 p-2 rounded-xl bg-surface-container-lowest shadow-sm hover:shadow-md transition-all active:scale-95" type="button">
+<div class="w-12 h-12 rounded-full bg-primary-container text-on-primary flex items-center justify-center shadow-sm group-hover:bg-primary transition-colors"><span class="material-symbols-outlined text-[22px]">create_new_folder</span></div>
+<span class="font-label-sm text-label-sm text-on-surface font-medium text-center line-clamp-1">Novo Projecto</span>
+</button>
+<button class="group flex flex-col items-center gap-1.5 p-2 rounded-xl bg-surface-container-lowest shadow-sm hover:shadow-md transition-all active:scale-95" type="button">
+<div class="w-12 h-12 rounded-full bg-surface-container text-on-surface-variant flex items-center justify-center group-hover:bg-surface-container-high transition-colors"><span class="material-symbols-outlined text-[22px]">add_task</span></div>
+<span class="font-label-sm text-label-sm text-on-surface font-medium text-center line-clamp-1">Nova Tarefa</span>
+</button>
+<button class="group flex flex-col items-center gap-1.5 p-2 rounded-xl bg-surface-container-lowest shadow-sm hover:shadow-md transition-all active:scale-95" type="button">
+<div class="w-12 h-12 rounded-full bg-surface-container text-on-surface-variant flex items-center justify-center group-hover:bg-surface-container-high transition-colors"><span class="material-symbols-outlined text-[22px]">group</span></div>
+<span class="font-label-sm text-label-sm text-on-surface font-medium text-center line-clamp-1">Equipa</span>
+</button>
+<button class="group flex flex-col items-center gap-1.5 p-2 rounded-xl bg-surface-container-lowest shadow-sm hover:shadow-md transition-all active:scale-95" type="button">
+<div class="w-12 h-12 rounded-full bg-surface-container text-on-surface-variant flex items-center justify-center group-hover:bg-surface-container-high transition-colors"><span class="material-symbols-outlined text-[22px]">hourglass_top</span></div>
+<span class="font-label-sm text-label-sm text-on-surface font-medium text-center line-clamp-1">Prazos</span>
+</button>
+</div>
+</div>
+<!-- Faixa de imagem -->
+<div class="relative w-full rounded-xl overflow-hidden bg-surface-container-low shadow-sm">
+<div class="relative h-28 w-full">
+<img alt="Visão geral do design system do ProjetoEmDia" class="w-full h-full object-cover object-center" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDPzEzvMAMj7GR-o2Dz389yZR50Qz-ZcULYS0EXVYSQfL5TzYjJrzkFIFOkn3zR4k52aOiXx90_whTVTYObXayVFrsa6DBVKcBM_2UuKnXIvXzsYNPn2uWlO3-5wr-039SlSz18u_HgeatacGjLfThFOp2jpesJ030p1z4oydO52eHOmk4o5tEzacfFmvB8C4EMG6RMfRiowEFX8akbE7UlKRdgiiBLyjKYWtAgwmrKRpNAzYRmIdsOxg"/>
+<div class="absolute inset-0 bg-gradient-to-r from-primary-container/90 via-primary-container/60 to-transparent flex items-center px-4">
+<div class="max-w-[70%] flex flex-col gap-1">
+<span class="font-label-sm text-label-sm text-secondary-fixed uppercase tracking-wider">Espaço de Trabalho Activo</span>
+<p class="font-headline-sm text-headline-sm text-on-primary leading-snug">Metodologia Ágil em equipas remotas de Moçambique</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Projectos Recentes -->
+<div class="flex flex-col gap-3">
+<div class="flex items-center justify-between">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Projectos Recentes</h3>
+<a class="font-label-lg text-label-lg text-secondary flex items-center gap-0.5 hover:underline" href="#">Ver todos<span class="material-symbols-outlined text-[16px]">chevron_right</span></a>
+</div>
+<div class="bg-surface-container-lowest p-4 rounded-xl shadow-sm flex flex-col gap-3 transition-all hover:shadow-md">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-2.5">
+<div class="w-10 h-10 rounded-lg bg-secondary-fixed flex items-center justify-center text-on-secondary-fixed"><span class="material-symbols-outlined text-[20px]">phone_iphone</span></div>
+<div class="flex flex-col"><h4 class="font-headline-sm text-headline-sm text-on-surface">Redesenho App Mobile</h4><span class="font-body-sm text-body-sm text-on-surface-variant">Banco Comercial • Maputo</span></div>
+</div>
+<span class="px-2.5 py-0.5 rounded-full text-label-sm font-label-sm bg-secondary-fixed text-on-secondary-fixed">Em Curso</span>
+</div>
+<div class="flex flex-col gap-1.5 pt-1">
+<div class="flex items-center justify-between font-label-md text-label-md"><span class="text-on-surface-variant">8 de 12 tarefas</span><span class="font-semibold text-primary">65%</span></div>
+<div class="w-full h-2 rounded-full bg-surface-container overflow-hidden"><div class="h-full bg-secondary rounded-full" style="width: 65%;"></div></div>
+</div>
+<div class="flex items-center justify-between pt-1">
+<div class="flex items-center -space-x-2">
+<img alt="Colaborador" class="w-7 h-7 rounded-full object-cover shadow-xs" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCidvjPYVlsiDeaywQTZ5ZaV-sUP8OsXyF9fTnfUyPhpAVEHSdrRt9SKDsbjXGXIWSWBE6plD8lXd0KQzGlSUsFGiG7uhfg85LjLmDiaVwvTGdUIFwCIiS-bvLMAKsnZ9TliiC9dlXTOEXm6fqKH47N3aKDmZEyu4xUxf4b_hor0F8aHwc9azhf3roK1J8aKhTZBUXnzqd1ok5GX8JUpgoMZ_nHHYZ9S-QAm1psUibi"/>
+<div class="w-7 h-7 rounded-full bg-primary-container text-on-primary flex items-center justify-center font-label-sm text-label-sm">EM</div>
+<div class="w-7 h-7 rounded-full bg-secondary flex items-center justify-center text-on-secondary font-label-sm text-label-sm">+2</div>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant flex items-center gap-1"><span class="material-symbols-outlined text-[15px]">schedule</span>Faltam 4 dias</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-4 rounded-xl shadow-sm flex flex-col gap-3 transition-all hover:shadow-md">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-2.5">
+<div class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center text-on-surface-variant"><span class="material-symbols-outlined text-[20px]">campaign</span></div>
+<div class="flex flex-col"><h4 class="font-headline-sm text-headline-sm text-on-surface">Campanha Marketing Maputo</h4><span class="font-body-sm text-body-sm text-on-surface-variant">E-commerce Movel</span></div>
+</div>
+<span class="px-2.5 py-0.5 rounded-full text-label-sm font-label-sm bg-surface-container-high text-on-surface-variant">40%</span>
+</div>
+<div class="flex flex-col gap-1.5 pt-1">
+<div class="flex items-center justify-between font-label-md text-label-md"><span class="text-on-surface-variant">4 de 10 tarefas</span><span class="font-semibold text-primary">40%</span></div>
+<div class="w-full h-2 rounded-full bg-surface-container overflow-hidden"><div class="h-full bg-primary-container rounded-full" style="width: 40%;"></div></div>
+</div>
+<div class="flex items-center justify-between pt-1">
+<div class="flex items-center -space-x-2">
+<div class="w-7 h-7 rounded-full bg-surface-container-highest text-on-surface flex items-center justify-center font-label-sm text-label-sm">SN</div>
+<div class="w-7 h-7 rounded-full bg-primary text-on-primary flex items-center justify-center font-label-sm text-label-sm">AJ</div>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant flex items-center gap-1"><span class="material-symbols-outlined text-[15px]">schedule</span>22 de Junho</span>
+</div>
+</div>
+</div>
+<!-- Tarefas para Hoje -->
+<div class="flex flex-col gap-3">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Tarefas para Hoje</h3>
+<span class="px-2 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm font-semibold" id="task-counter">1 de 3</span>
+</div>
+<button class="text-secondary font-label-sm text-label-sm font-medium hover:underline" type="button">Organizar</button>
+</div>
+<div class="flex flex-col gap-2" id="today-tasks-container">
+<div class="task-item bg-surface-container-lowest p-3.5 rounded-xl shadow-sm flex items-center justify-between gap-3 cursor-pointer select-none transition-all active:scale-[0.99]" onclick="toggleTask(this)">
+<div class="flex items-center gap-3 min-w-0">
+<div class="task-checkbox w-6 h-6 rounded-full bg-surface-container flex items-center justify-center text-primary-container transition-colors shrink-0"><span class="material-symbols-outlined text-[16px] opacity-0 transition-opacity">check</span></div>
+<div class="flex flex-col min-w-0"><span class="task-title font-body-md text-body-md text-on-surface font-medium truncate">Revisar proposta técnica de UX</span><span class="font-body-sm text-body-sm text-on-surface-variant">Projecto Banco Comercial • 11:30</span></div>
+</div>
+<span class="px-2 py-0.5 rounded-full bg-surface-container-high text-on-surface-variant text-label-sm font-label-sm shrink-0">Design</span>
+</div>
+<div class="task-item bg-surface-container-lowest p-3.5 rounded-xl shadow-sm flex items-center justify-between gap-3 cursor-pointer select-none transition-all active:scale-[0.99]" onclick="toggleTask(this)">
+<div class="flex items-center gap-3 min-w-0">
+<div class="task-checkbox w-6 h-6 rounded-full bg-surface-container flex items-center justify-center text-primary-container transition-colors shrink-0"><span class="material-symbols-outlined text-[16px] opacity-0 transition-opacity">check</span></div>
+<div class="flex flex-col min-w-0"><span class="task-title font-body-md text-body-md text-on-surface font-medium truncate">Enviar cotação para cliente de Nampula</span><span class="font-body-sm text-body-sm text-on-surface-variant">Freelance • 15:00</span></div>
+</div>
+<span class="px-2 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed text-label-sm font-label-sm shrink-0">Finanças</span>
+</div>
+<div class="task-item bg-surface-container-lowest/60 p-3.5 rounded-xl shadow-sm flex items-center justify-between gap-3 cursor-pointer select-none transition-all active:scale-[0.99]" onclick="toggleTask(this)">
+<div class="flex items-center gap-3 min-w-0">
+<div class="task-checkbox w-6 h-6 rounded-full bg-primary-container flex items-center justify-center text-on-primary transition-colors shrink-0"><span class="material-symbols-outlined text-[16px] opacity-100 transition-opacity">check</span></div>
+<div class="flex flex-col min-w-0"><span class="task-title font-body-md text-body-md text-on-surface-variant line-through truncate">Reunião de alinhamento com equipa dev</span><span class="font-body-sm text-body-sm text-on-surface-variant/80">Concluído às 09:15</span></div>
+</div>
+<span class="px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant text-label-sm font-label-sm shrink-0">Geral</span>
+</div>
+</div>
+</div>
+<!-- Dica de Produtividade -->
+<div class="rounded-xl p-4 bg-surface-container-low flex items-start gap-3 shadow-xs">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center text-secondary shrink-0"><span class="material-symbols-outlined text-[18px]">lightbulb</span></div>
+<div class="flex flex-col gap-0.5">
+<span class="font-label-lg text-label-lg text-on-surface font-semibold">Dica de Produtividade</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Foque na conclusão do Relatório Trimestral antes do meio-dia para garantir feedback imediato dos mentores.</p>
+</div>
+</div>
+</div>
+<script>
+  function toggleTask(element) {
+    const checkbox = element.querySelector('.task-checkbox');
+    const checkIcon = checkbox.querySelector('.material-symbols-outlined');
+    const title = element.querySelector('.task-title');
+    const isCompleted = checkIcon.classList.contains('opacity-100');
+
+    if (isCompleted) {
+      // Voltar a pendente
+      checkIcon.classList.replace('opacity-100', 'opacity-0');
+      checkbox.classList.replace('bg-primary-container', 'bg-surface-container');
+      checkbox.classList.replace('text-on-primary', 'text-primary-container');
+      title.classList.remove('line-through', 'text-on-surface-variant');
+      title.classList.add('text-on-surface');
+      element.classList.remove('opacity-75');
+    } else {
+      // Marcar como concluída
+      checkIcon.classList.replace('opacity-0', 'opacity-100');
+      checkbox.classList.replace('bg-surface-container', 'bg-primary-container');
+      checkbox.classList.replace('text-primary-container', 'text-on-primary');
+      title.classList.remove('text-on-surface');
+      title.classList.add('line-through', 'text-on-surface-variant');
+      element.classList.add('opacity-75');
+    }
+    updateCounter();
+  }
+
+  function updateCounter() {
+    const total = document.querySelectorAll('.task-item').length;
+    const completed = document.querySelectorAll('.task-checkbox .opacity-100').length;
+    const counterBadge = document.getElementById('task-counter');
+    if (counterBadge) {
+      counterBadge.textContent = completed + ' de ' + total;
+    }
+  }
+</script></main>
+<!-- Barra de navegação inferior (activo: Início no original: nenhum item marcado) -->
+<nav class="fixed bottom-0 w-full z-50 pb-safe pointer-events-none" data-active-classes="bg-primary-container text-on-primary font-label-md"><div class="px-margin pb-3 pt-1"><div class="pointer-events-auto h-16 bg-surface-container-lowest/90 backdrop-blur-xl rounded-full shadow-[0_4px_20px_-2px_rgba(16,43,78,0.1),0_2px_6px_-1px_rgba(16,43,78,0.04)] ring-1 ring-outline-variant/20 px-space-xs flex items-center justify-around"><a class="flex items-center justify-center gap-1.5 h-11 px-3.5 rounded-full text-on-surface-variant transition-all" data-path="inicio" href="#"><span class="material-symbols-outlined text-[20px]">home</span><span class="font-label-md text-label-md">Início</span></a><a class="flex items-center justify-center gap-1.5 h-11 px-3.5 rounded-full text-on-surface-variant transition-all" data-path="projectos" href="#"><span class="material-symbols-outlined text-[20px]">folder</span><span class="font-label-md text-label-md">Projectos</span></a><a class="flex items-center justify-center gap-1.5 h-11 px-3.5 rounded-full text-on-surface-variant transition-all" data-path="tarefas" href="#"><span class="material-symbols-outlined text-[20px]">checklist</span><span class="font-label-md text-label-md">Tarefas</span></a><a class="flex items-center justify-center gap-1.5 h-11 px-3.5 rounded-full text-on-surface-variant transition-all" data-path="perfil" href="#"><span class="material-symbols-outlined text-[20px]">person</span><span class="font-label-md text-label-md">Perfil</span></a></div></div></nav>
+</body></html>

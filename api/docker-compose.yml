@@ -1,0 +1,82 @@
+
+# PROJETOEMDIA - API + PostgreSQL + Adminer opcional
+# API:      http://localhost:3050
+# Adminer:  http://localhost:8090
+# Postgres: localhost:5450
+
+name: projetoemdia
+
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-projetoemdia}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-projetoemdia}
+      POSTGRES_DB: ${POSTGRES_DB:-projetoemdia}
+    ports:
+      - "5450:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  api:
+    build:
+      context: .
+      target: dev
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    env_file:
+      - .env
+    environment:
+      NODE_ENV: development
+      PORT: 3000
+
+      # Ligação interna ao PostgreSQL
+      DATABASE_URL: postgresql://${POSTGRES_USER:-projetoemdia}:${POSTGRES_PASSWORD:-projetoemdia}@db:5432/${POSTGRES_DB:-projetoemdia}?schema=public
+
+      # Hot reload no Windows
+      TSC_WATCHFILE: UseFsEventsWithFallbackDynamicPolling
+      CHOKIDAR_USEPOLLING: "true"
+
+    ports:
+      - "3050:3000"
+
+    volumes:
+      - .:/app
+      - /app/node_modules
+
+    command:
+      - sh
+      - -c
+      - |
+        set -e
+        npx prisma generate
+        if [ -d prisma/migrations ]; then
+          npx prisma migrate deploy
+        else
+          echo "Sem pasta prisma/migrations: a usar db push"
+          npx prisma db push --skip-generate
+        fi
+        npm run start:dev
+
+  adminer:
+    image: adminer:4
+    profiles:
+      - tools
+    restart: unless-stopped
+    depends_on:
+      - db
+    ports:
+      - "8090:8080"
+
+volumes:
+  pgdata:

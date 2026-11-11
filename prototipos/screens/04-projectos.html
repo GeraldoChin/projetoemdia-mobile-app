@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<!--
+  ECRÃ 04 — Projectos (lista)
+  Tipo Stitch: mobile_tab (activo: Projectos)
+  Captura: ../screenshots/04-projectos.png
+  Interacção: pesquisa em tempo real, filtros (Todos / Activos / Concluídos / Arquivo),
+              folha "Criar novo projecto", folha de detalhes rápidos ao tocar num cartão
+  Nota: as imagens de avatar são URLs externos do Stitch e podem expirar. O logótipo é provisório (../assets/logo.svg).
+-->
+<html lang="pt"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+<link href="../design/base.css" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="../design/tailwind-config.js"></script>
+<style>body { min-height: max(884px, 100dvh); }</style></head>
+<body class="bg-surface font-body-md text-on-surface antialiased flex flex-col min-h-screen">
+<header class="fixed top-0 w-full z-50 bg-surface/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.03)] pt-safe"><div class="h-16 px-margin flex items-center justify-between"><div class="flex items-center gap-space-sm"><img alt="ProjetoEmDia Logo" class="h-8 w-auto object-contain" src="../assets/logo.svg"/><div class="flex flex-col"><span class="font-label-sm text-label-sm text-secondary uppercase tracking-wider leading-none">ProjetoEmDia</span><span class="font-headline-sm text-headline-sm text-on-surface leading-tight">Projectos</span></div></div><div class="flex items-center gap-space-xs"><button aria-label="Notificações" class="relative w-11 h-11 flex items-center justify-center rounded-full text-on-surface-variant hover:bg-surface-container-high transition-colors" type="button"><span class="material-symbols-outlined text-[22px]">notifications</span><span class="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-error ring-2 ring-surface"></span></button><div class="flex items-center justify-center p-0.5"><img alt="Profile" class="w-8 h-8 rounded-full object-cover ring-1 ring-outline-variant/30" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCidvjPYVlsiDeaywQTZ5ZaV-sUP8OsXyF9fTnfUyPhpAVEHSdrRt9SKDsbjXGXIWSWBE6plD8lXd0KQzGlSUsFGiG7uhfg85LjLmDiaVwvTGdUIFwCIiS-bvLMAKsnZ9TliiC9dlXTOEXm6fqKH47N3aKDmZEyu4xUxf4b_hor0F8aHwc9azhf3roK1J8aKhTZBUXnzqd1ok5GX8JUpgoMZ_nHHYZ9S-QAm1psUibi"/></div></div></div></header>
+<main class="flex flex-col relative w-full pt-16 pb-28 bg-surface px-margin min-h-screen"><div class="flex flex-col w-full pb-12">
+<!-- Título e contador -->
+<div class="flex items-center justify-between mt-2 mb-4">
+<div class="flex flex-col">
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">Os meus projectos</h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant flex items-center gap-1.5 mt-0.5"><span class="w-2 h-2 rounded-full bg-secondary"></span><span>4 projectos em andamento</span></p>
+</div>
+<div class="flex items-center">
+<button aria-label="Estatísticas Rápidas" class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-on-surface hover:bg-surface-container-high transition-transform active:scale-95 shadow-sm" type="button"><span class="material-symbols-outlined text-[20px]">insights</span></button>
+</div>
+</div>
+<!-- Pesquisa e filtros -->
+<div class="flex items-center gap-2 mb-4">
+<div class="relative flex-1 flex items-center bg-surface-container-lowest rounded-full shadow-sm px-3.5 py-2.5">
+<span class="material-symbols-outlined text-outline text-[20px] mr-2">search</span>
+<input class="w-full bg-transparent font-body-md text-body-md text-on-surface placeholder:text-outline focus:outline-none" id="projectSearch" placeholder="Pesquisar projectos ou tarefas..." type="text"/>
+<button class="hidden text-outline hover:text-on-surface" id="clearSearch" type="button"><span class="material-symbols-outlined text-[18px]">cancel</span></button>
+</div>
+<button aria-label="Filtrar projectos" class="w-11 h-11 rounded-full bg-surface-container-lowest flex items-center justify-center text-primary-container shadow-sm hover:bg-surface-container transition-colors active:scale-95" id="openFilterBtn" type="button"><span class="material-symbols-outlined text-[20px]">tune</span></button>
+</div>
+<!-- Chips de filtro (rolagem horizontal) -->
+<div class="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1 mb-5">
+<button class="filter-tab flex items-center gap-1.5 px-4 py-2 rounded-full font-label-md text-label-md bg-primary-container text-on-primary shadow-sm transition-all active:scale-95" data-filter="all" type="button"><span>Todos</span><span class="px-1.5 py-0.2 rounded-full bg-white/20 text-[10px]">6</span></button>
+<button class="filter-tab flex items-center gap-1.5 px-4 py-2 rounded-full font-label-md text-label-md bg-surface-container-lowest text-on-surface-variant shadow-sm hover:bg-surface-container transition-all active:scale-95" data-filter="active" type="button"><span>Activos</span><span class="px-1.5 py-0.2 rounded-full bg-surface-container text-on-surface-variant text-[10px]">4</span></button>
+<button class="filter-tab flex items-center gap-1.5 px-4 py-2 rounded-full font-label-md text-label-md bg-surface-container-lowest text-on-surface-variant shadow-sm hover:bg-surface-container transition-all active:scale-95" data-filter="completed" type="button"><span>Concluídos</span><span class="px-1.5 py-0.2 rounded-full bg-surface-container text-on-surface-variant text-[10px]">2</span></button>
+<button class="filter-tab flex items-center gap-1.5 px-3.5 py-2 rounded-full font-label-md text-label-md bg-surface-container-lowest text-on-surface-variant shadow-sm hover:bg-surface-container transition-all active:scale-95" data-filter="archived" type="button"><span class="material-symbols-outlined text-[16px]">archive</span><span>Arquivo</span></button>
+</div>
+<!-- Lista de projectos -->
+<div class="flex flex-col gap-4" id="projectsContainer">
+<!-- Cartão 1 -->
+<article class="project-card group relative bg-surface-container-lowest rounded-xl p-4 shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer" data-status="active" onclick="openDetailsModal('Redesenho Plataforma Web', 'Modernização da interface e fluxo de pagamentos com M-Pesa e cartões.', '78%', '14/18', '28/06/2025', 'Em progresso', '#244F78', '#EAF2FA')">
+<div class="flex items-start justify-between gap-3 mb-2.5">
+<div class="flex-1 min-w-0">
+<div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm mb-2"><span class="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse"></span>Em progresso</div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface truncate group-hover:text-primary-container transition-colors">Redesenho Plataforma Web</h2>
+</div>
+<button aria-label="Opções do projecto" class="text-outline-variant hover:text-on-surface p-1 rounded-full hover:bg-surface-container transition-colors" onclick="event.stopPropagation(); alert('Opções do projecto');" type="button"><span class="material-symbols-outlined text-[20px]">more_vert</span></button>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-2 mb-4">Modernização da interface e fluxo de pagamentos com M-Pesa e cartões.</p>
+<div class="space-y-1.5 mb-4">
+<div class="flex items-center justify-between text-body-sm font-body-sm"><span class="text-on-surface-variant font-label-md text-label-md">14/18 tarefas concluídas</span><span class="font-label-lg text-label-lg text-primary-container font-semibold">78%</span></div>
+<div class="w-full h-2 rounded-full bg-surface-container overflow-hidden"><div class="h-full rounded-full bg-primary-container transition-all duration-500" style="width: 78%;"></div></div>
+</div>
+<div class="flex items-center justify-between pt-1 border-t-0">
+<div class="flex items-center gap-1.5 text-on-surface-variant font-body-sm text-body-sm"><span class="material-symbols-outlined text-[16px] text-secondary">event</span><span>Prazo: <strong class="font-medium text-on-surface">28/06/2025</strong></span></div>
+<div class="flex items-center -space-x-2">
+<img class="w-7 h-7 rounded-full object-cover shadow-sm" alt="Samira" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBhVWaKZ7plqC3IuDxCuKGScAbqU9foI38UzRnbJElerxHx92YGhzh3lWANzjZ1hHbbzWk75FAfqfVqvBPstx2zYZhMxQG3dW32MuugN5hIhlwqjOMYonmEBV7HRJwUrD7Msp0-Rx4t9AvcGryZ6KFTihvOOiuIRLfqbhdH3Ls4Vb83gnc04ylWSKMPXwPoDihxWT94yLuoTYMNpIkWbJD-h8cgpEp55cQZEycJuhJc"/>
+<img class="w-7 h-7 rounded-full object-cover shadow-sm" alt="Carlos" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDucJZrRj4j1bcEnVlxidalIJ-9PeJpuhJM7uZ4CjgkRwPKhwDwzarOBGkrSEp8si6E3uonogGFDHZncRWs2wdVpVIMy0ikeobGykTjV3_iWGVVWIh-oBnNOruwpzf7GgIh5yhKzaqmQycvXrbMja8PtdzmedUPCxw0Eaz_yjqxcdzO18VOfz0osk5jKzQCyhi1UszuU0ka9v4kvCT3Dq9lTfb7PtP39lK-dbI8PyIT"/>
+<img class="w-7 h-7 rounded-full object-cover shadow-sm" alt="Tania" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCst2uskSfQPI9A8FOAdEtEm2sLyeSgwLRdQMTcTDpWhwMa2psAntRMq9XmN-iq88S0-SB_SULy1hHOH7eeBDBbwG1uKic94p2iNU5xU15Bngsq3sQbKVCWMU-EFSOJ79aCwEUU-jCSgCCDy14fJvWo0tfsODWdEVkxq-MloV2asoNY5vk66gsQPLqTj8654l4hMoRuRW8hzkquJEt_CfJ_FDDUqwUy3PS72VLVFmnp"/>
+<div class="w-7 h-7 rounded-full bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm flex items-center justify-center font-bold shadow-sm">+2</div>
+</div>
+</div>
+</article>
+<!-- Cartão 2 -->
+<article class="project-card group relative bg-surface-container-lowest rounded-xl p-4 shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer" data-status="active" onclick="openDetailsModal('Lançamento Marca FinTech', 'Identidade visual, materiais para redes sociais e documentação.', '45%', '9/20', '15/07/2025', 'Activo', '#2F5982', '#A8CFFF')">
+<div class="flex items-start justify-between gap-3 mb-2.5">
+<div class="flex-1 min-w-0">
+<div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm mb-2"><span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>Activo</div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface truncate group-hover:text-primary-container transition-colors">Lançamento Marca FinTech</h2>
+</div>
+<button aria-label="Opções do projecto" class="text-outline-variant hover:text-on-surface p-1 rounded-full hover:bg-surface-container transition-colors" onclick="event.stopPropagation(); alert('Opções do projecto');" type="button"><span class="material-symbols-outlined text-[20px]">more_vert</span></button>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-2 mb-4">Identidade visual, materiais para redes sociais e documentação institucional.</p>
+<div class="space-y-1.5 mb-4">
+<div class="flex items-center justify-between text-body-sm font-body-sm"><span class="text-on-surface-variant font-label-md text-label-md">9/20 tarefas concluídas</span><span class="font-label-lg text-label-lg text-secondary font-semibold">45%</span></div>
+<div class="w-full h-2 rounded-full bg-surface-container overflow-hidden"><div class="h-full rounded-full bg-secondary transition-all duration-500" style="width: 45%;"></div></div>
+</div>
+<div class="flex items-center justify-between pt-1">
+<div class="flex items-center gap-1.5 text-on-surface-variant font-body-sm text-body-sm"><span class="material-symbols-outlined text-[16px] text-secondary">event</span><span>Prazo: <strong class="font-medium text-on-surface">15/07/2025</strong></span></div>
+<div class="flex items-center -space-x-2">
+<img class="w-7 h-7 rounded-full object-cover shadow-sm" alt="Copywriter" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDfEj1OWI6HOMpcQos536QKjd-JvnFGbIX3KsxhkggajDHfmgL26PM1M85s9_W08G8lSyN-oZ0X5eDNNEsIfmJES9tViWzvh-Lu0e0wAtHhZKM0lhaHwfedjKGECJDIEVt2VuXtNzor-zxvYwSi6uzrVz2qsD5E-O4hK8ChtifBJq5ZZdkvALN4RUve7uL8AHGxxHgkUxuYhtwdpjjGY1ERnuLfpS0nPkXi-wbBf3_y"/>
+<img class="w-7 h-7 rounded-full object-cover shadow-sm" alt="Designer" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAfMPJs9vBlDN-1zotc9Fh03ELYarV2v7UUu_umi5Z1Pwd0Ya2BsMZIBqs09ds_gLMrJXqQ2RkbqxBmOul-sYlk4-HM61PonRbbRMcWZ81Lbwac8Vjr-x-aHRvpZ7JjXAOKetnagev6ZmJZOnECfzjH6jsZ7pocLLbmmP3GKNpInVESaKQoG7kyiQgt2voP-_-B0h8NEj06acUse3loAs1zm2XaJixA6UB3fX6IqsNv"/>
+<div class="w-7 h-7 rounded-full bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm flex items-center justify-center font-bold shadow-sm">+1</div>
+</div>
+</div>
+</article>
+<!-- Cartão 3 -->
+<article class="project-card group relative bg-surface-container-lowest rounded-xl p-4 shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer" data-status="completed" onclick="openDetailsModal('Pesquisa com Utilizadores', 'Entrevistas qualitativas com 15 estudantes universitários em Maputo.', '100%', '15/15', '10/05/2025', 'Concluído', '#2E9D72', '#EAF7F2')">
+<div class="flex items-start justify-between gap-3 mb-2.5">
+<div class="flex-1 min-w-0">
+<div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-800 font-label-sm text-label-sm mb-2"><span class="material-symbols-outlined text-[14px] text-emerald-600">check_circle</span>Concluído</div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface truncate group-hover:text-primary-container transition-colors">Pesquisa com Utilizadores</h2>
+</div>
+<button aria-label="Opções do projecto" class="text-outline-variant hover:text-on-surface p-1 rounded-full hover:bg-surface-container transition-colors" onclick="event.stopPropagation(); alert('Opções do projecto');" type="button"><span class="material-symbols-outlined text-[20px]">more_vert</span></button>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-2 mb-4">Entrevistas qualitativas com 15 estudantes universitários em Maputo.</p>
+<div class="space-y-1.5 mb-4">
+<div class="flex items-center justify-between text-body-sm font-body-sm"><span class="text-on-surface-variant font-label-md text-label-md">15/15 tarefas concluídas</span><span class="font-label-lg text-label-lg text-emerald-700 font-semibold">100%</span></div>
+<div class="w-full h-2 rounded-full bg-surface-container overflow-hidden"><div class="h-full rounded-full bg-emerald-600 transition-all duration-500" style="width: 100%;"></div></div>
+</div>
+<div class="flex items-center justify-between pt-1">
+<div class="flex items-center gap-1.5 text-on-surface-variant font-body-sm text-body-sm"><span class="material-symbols-outlined text-[16px] text-emerald-700">task_alt</span><span class="text-emerald-800 font-medium">Finalizado com sucesso</span></div>
+<div class="flex items-center -space-x-2">
+<img class="w-7 h-7 rounded-full object-cover shadow-sm" alt="Investigadora UX" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC1l0hYf7ySnLtGsQU_TFhXt0Q-cEWkjUD9dQk3Xv7XIK0Ey_snzOX-85lX8h1TfE81nf7sghDEar9GwupLhmIEZ0fj45cojoTIDjgD_AGd10lZgZvf4V4QGfQb9xv6MSgHlxd7fuhRqgWuJ8BPJnZA34-xWW0xKDc88DYTZJcAEqY5GGFC48gFzBpTj89rAlVBst-MKcXZNU3La27-WxgUc8X6mnCTYroOu4txcGJ1"/>
+<img class="w-7 h-7 rounded-full object-cover shadow-sm" alt="Assistente de pesquisa" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCwUcYVxAUTSosC9FDu51pbkn7RBh82lF7TLsmk54Jbj-quXUq5pRuE804pKd6o9_eWMwneL9STlF3cBN8_vPn9KcARolA6im54YPMkXJVxdB3YM0r6hW00-QAEhmNcTZ0Mwk34Zd32V7s8xWdUR2ypLzdnH5pZC3T0spV3mRImqkLC0JIi69-IZeWo4P6SFub0Qjw0_waMaHdWb6A3DXrRpwBR-U-kvOx6tE6SC-Is"/>
+</div>
+</div>
+</article>
+<!-- Cartão 4 -->
+<article class="project-card group relative bg-surface-container-lowest rounded-xl p-4 shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer" data-status="active" onclick="openDetailsModal('Automação de Relatórios Mensais', 'Scripts e dashboards em tempo real para pequenos negócios.', '25%', '2/8', '05/08/2025', 'Activo', '#2F5982', '#A8CFFF')">
+<div class="flex items-start justify-between gap-3 mb-2.5">
+<div class="flex-1 min-w-0">
+<div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm mb-2"><span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>Activo</div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface truncate group-hover:text-primary-container transition-colors">Automação de Relatórios Mensais</h2>
+</div>
+<button aria-label="Opções do projecto" class="text-outline-variant hover:text-on-surface p-1 rounded-full hover:bg-surface-container transition-colors" onclick="event.stopPropagation(); alert('Opções do projecto');" type="button"><span class="material-symbols-outlined text-[20px]">more_vert</span></button>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-2 mb-4">Scripts e dashboards em tempo real para pequenos negócios e micro-empresas.</p>
+<div class="space-y-1.5 mb-4">
+<div class="flex items-center justify-between text-body-sm font-body-sm"><span class="text-on-surface-variant font-label-md text-label-md">2/8 tarefas concluídas</span><span class="font-label-lg text-label-lg text-secondary font-semibold">25%</span></div>
+<div class="w-full h-2 rounded-full bg-surface-container overflow-hidden"><div class="h-full rounded-full bg-secondary transition-all duration-500" style="width: 25%;"></div></div>
+</div>
+<div class="flex items-center justify-between pt-1">
+<div class="flex items-center gap-1.5 text-on-surface-variant font-body-sm text-body-sm"><span class="material-symbols-outlined text-[16px] text-secondary">event</span><span>Prazo: <strong class="font-medium text-on-surface">05/08/2025</strong></span></div>
+<div class="flex items-center -space-x-2">
+<img class="w-7 h-7 rounded-full object-cover shadow-sm" alt="Analista de dados" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB-btRHdIONpIBM9w_yxi9Yc3HsuqXrAbTrenmf5kTcv_YPey92zhv6IhYjq6ODdTLw09M2HpXHeRjd4zN97u8c-yKSfHM_6Hsn32Exh7rj1rjrMEPAj9vtbWDwdF8gGUtgNDbVOx7LGnOcijPtYr3S_hooYqWfAp4-jrZzmQ15JDlm2lYOp7GdpV04aDu233_QJRmz88lO8ElKe4fYswiWzFxI8ssrxstIVTL9Okah"/>
+</div>
+</div>
+</article>
+</div>
+<!-- Botão flutuante "Novo projecto" -->
+<div class="sticky bottom-24 z-30 self-end mr-1">
+<button class="flex items-center gap-2 px-5 py-3.5 rounded-full bg-primary-container text-on-primary shadow-xl hover:shadow-2xl hover:bg-primary transition-all duration-200 active:scale-95 group" id="openNewProjectBtn" type="button"><span class="material-symbols-outlined text-[22px] group-hover:rotate-90 transition-transform duration-200">add</span><span class="font-headline-sm text-headline-sm tracking-wide">Novo projecto</span></button>
+</div>
+<!-- Folha: Criar novo projecto -->
+<div class="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-primary/40 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300" id="newProjectModal">
+<div class="w-full max-w-lg bg-surface-container-lowest rounded-t-3xl sm:rounded-2xl p-6 shadow-2xl transform translate-y-full transition-transform duration-300 max-h-[795px] overflow-y-auto" id="modalCard">
+<div class="flex items-center justify-between mb-5">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-full bg-secondary-fixed flex items-center justify-center text-primary-container"><span class="material-symbols-outlined text-[20px]">create_new_folder</span></div>
+<h3 class="font-headline-md text-headline-md text-on-surface">Criar novo projecto</h3>
+</div>
+<button class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-on-surface hover:bg-surface-container-high" id="closeNewProjectBtn" type="button"><span class="material-symbols-outlined text-[18px]">close</span></button>
+</div>
+<form class="flex flex-col gap-4" id="newProjectForm">
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1.5">Título do projecto *</label>
+<input class="w-full px-4 py-3 rounded-xl bg-surface-container-low font-body-md text-body-md text-on-surface placeholder:text-outline focus:outline-none focus:bg-surface-container-lowest shadow-sm" placeholder="Ex: Campanha Digital M-Pesa" required="" type="text"/>
+</div>
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1.5">Descrição breve</label>
+<textarea class="w-full px-4 py-2.5 rounded-xl bg-surface-container-low font-body-md text-body-md text-on-surface placeholder:text-outline focus:outline-none focus:bg-surface-container-lowest shadow-sm resize-none" placeholder="Objectivos centrais, escopo e entregáveis principais..." rows="3"></textarea>
+</div>
+<div class="grid grid-cols-2 gap-3">
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1.5">Data de entrega *</label>
+<input class="w-full px-3 py-2.5 rounded-xl bg-surface-container-low font-body-sm text-body-sm text-on-surface focus:outline-none focus:bg-surface-container-lowest shadow-sm" required="" type="date" value="2025-07-30"/>
+</div>
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1.5">Prioridade</label>
+<select class="w-full px-3 py-2.5 rounded-xl bg-surface-container-low font-body-sm text-body-sm text-on-surface focus:outline-none focus:bg-surface-container-lowest shadow-sm">
+<option value="alta">Alta prioridade</option>
+<option selected="" value="media">Média prioridade</option>
+<option value="baixa">Baixa prioridade</option>
+</select>
+</div>
+</div>
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1.5">Membros da equipa</label>
+<div class="flex items-center gap-2 p-2 bg-surface-container-low rounded-xl">
+<div class="flex items-center -space-x-1.5">
+<img class="w-7 h-7 rounded-full object-cover shadow-xs" alt="Tania" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAKUei77e_JeUZeMiiI4-oxu3IqX0sN7HmCw2rEvJIDt2uK1tPR3YqYPMFMUlBX5ARVrEyeDlwjC5-Qz6uVOhI8zNHHwiaIze4-1jsJ8S__8_eMjtePNxz7iiXS-dKllbJPYu2tGxYemriCnTnXeqLZEJVC0HnVLWPP3iHPP_rqhuscEjJEiBvYwg510QAV0DIitzFlqUAR7S7o2l5tqAWfii8BgLkT2EWFByMeAuPy"/>
+<img class="w-7 h-7 rounded-full object-cover shadow-xs" alt="Carlos" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBH4oAjcIyd3h1H0YbepocvRnrbQMPwNbrJXUz9sFQiJH8WzrQS1srmE7AL4-DLAJ4fuUPJ7kkviwVczAqomFhDZfswOfAylOBKN1FP6Y5_YNqQoXDGknOBN8LQMCLleIFeRkdU0JbMyNhfGvsC0vIrEy-4qeVsos2OSmi4OQgnj0n3PBOpTNnazefy0IU_edP1px98H7uQGXgQ3yqZcKXMV1YF90ehngeoGlNzX0Qu"/>
+</div>
+<button class="flex items-center gap-1 text-secondary font-label-md text-label-md ml-auto hover:underline" type="button"><span class="material-symbols-outlined text-[16px]">person_add</span><span>Adicionar pessoas</span></button>
+</div>
+</div>
+<div class="flex items-center gap-3 mt-4">
+<button class="flex-1 py-3 rounded-full bg-surface-container text-on-surface font-label-lg text-label-lg active:scale-95 transition-all" id="cancelModalBtn" type="button">Cancelar</button>
+<button class="flex-1 py-3 rounded-full bg-primary-container text-on-primary font-label-lg text-label-lg shadow-md active:scale-95 transition-all flex items-center justify-center gap-1" type="submit"><span>Criar projecto</span><span class="material-symbols-outlined text-[18px]">check</span></button>
+</div>
+</form>
+</div>
+</div>
+<!-- Folha: Detalhes rápidos do projecto -->
+<div class="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-primary/40 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300" id="detailsModal">
+<div class="w-full max-w-lg bg-surface-container-lowest rounded-t-3xl sm:rounded-2xl p-6 shadow-2xl transform translate-y-full transition-transform duration-300 max-h-[751px] overflow-y-auto" id="detailsCard">
+<div class="flex items-center justify-between mb-4">
+<span class="px-2.5 py-0.5 rounded-full font-label-sm text-label-sm bg-secondary-fixed text-on-secondary-fixed" id="detailBadge">Em progresso</span>
+<button class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-on-surface hover:bg-surface-container-high" id="closeDetailsBtn" type="button"><span class="material-symbols-outlined text-[18px]">close</span></button>
+</div>
+<h3 class="font-headline-lg text-headline-lg text-on-surface mb-2" id="detailTitle">Título do Projecto</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-5" id="detailDesc">Descrição detalhada do projecto.</p>
+<div class="bg-surface-container-low rounded-xl p-4 mb-4 flex flex-col gap-3">
+<div class="flex items-center justify-between"><span class="font-label-md text-label-md text-on-surface-variant">Progresso Global</span><span class="font-headline-sm text-headline-sm text-primary-container" id="detailProgressText">78%</span></div>
+<div class="w-full h-2 rounded-full bg-surface-container overflow-hidden"><div class="h-full rounded-full bg-primary-container" id="detailProgressBar" style="width: 78%;"></div></div>
+<div class="flex items-center justify-between text-body-sm font-body-sm text-on-surface-variant pt-1"><span id="detailTaskCount">14 de 18 tarefas finalizadas</span><span class="font-medium text-on-surface" id="detailDeadline">Prazo: 28/06/2025</span></div>
+</div>
+<div class="flex items-center gap-3">
+<button class="flex-1 py-3 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-lg text-label-lg active:scale-95 transition-all flex items-center justify-center gap-1.5" onclick="closeDetailsModal();" type="button"><span class="material-symbols-outlined text-[18px]">checklist</span><span>Ver Tarefas</span></button>
+<button class="flex-1 py-3 rounded-full bg-primary-container text-on-primary font-label-lg text-label-lg active:scale-95 transition-all flex items-center justify-center gap-1.5" onclick="closeDetailsModal();" type="button"><span class="material-symbols-outlined text-[18px]">edit</span><span>Editar</span></button>
+</div>
+</div>
+</div>
+</div>
+<script>
+  // Filtros por chip
+  const filterTabs = document.querySelectorAll('.filter-tab');
+  const projectCards = document.querySelectorAll('.project-card');
+
+  filterTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      filterTabs.forEach(t => {
+        t.className = 'filter-tab flex items-center gap-1.5 px-4 py-2 rounded-full font-label-md text-label-md bg-surface-container-lowest text-on-surface-variant shadow-sm hover:bg-surface-container transition-all active:scale-95';
+        const badge = t.querySelector('span:last-child');
+        if (badge) badge.className = 'px-1.5 py-0.2 rounded-full bg-surface-container text-on-surface-variant text-[10px]';
+      });
+
+      tab.className = 'filter-tab flex items-center gap-1.5 px-4 py-2 rounded-full font-label-md text-label-md bg-primary-container text-on-primary shadow-sm transition-all active:scale-95';
+      const activeBadge = tab.querySelector('span:last-child');
+      if (activeBadge) activeBadge.className = 'px-1.5 py-0.2 rounded-full bg-white/20 text-[10px]';
+
+      const filterVal = tab.getAttribute('data-filter');
+      projectCards.forEach(card => {
+        const cardStatus = card.getAttribute('data-status');
+        if (filterVal === 'all') {
+          card.style.display = 'block';
+        } else if (filterVal === 'active' && cardStatus === 'active') {
+          card.style.display = 'block';
+        } else if (filterVal === 'completed' && cardStatus === 'completed') {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    });
+  });
+
+  // Pesquisa em tempo real
+  const searchInput = document.getElementById('projectSearch');
+  const clearSearchBtn = document.getElementById('clearSearch');
+
+  searchInput.addEventListener('input', (e) => {
+    const term = e.target.value.toLowerCase().trim();
+    if (term.length > 0) {
+      clearSearchBtn.classList.remove('hidden');
+    } else {
+      clearSearchBtn.classList.add('hidden');
+    }
+
+    projectCards.forEach(card => {
+      const text = card.textContent.toLowerCase();
+      if (text.includes(term)) {
+        card.style.display = 'block';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  });
+
+  clearSearchBtn.addEventListener('click', () => {
+    searchInput.value = '';
+    clearSearchBtn.classList.add('hidden');
+    projectCards.forEach(card => card.style.display = 'block');
+  });
+
+  // Folha: novo projecto
+  const newProjectModal = document.getElementById('newProjectModal');
+  const modalCard = document.getElementById('modalCard');
+  const openNewProjectBtn = document.getElementById('openNewProjectBtn');
+  const closeNewProjectBtn = document.getElementById('closeNewProjectBtn');
+  const cancelModalBtn = document.getElementById('cancelModalBtn');
+  const newProjectForm = document.getElementById('newProjectForm');
+
+  function openModal() {
+    newProjectModal.classList.remove('pointer-events-none', 'opacity-0');
+    newProjectModal.classList.add('opacity-100');
+    modalCard.classList.remove('translate-y-full');
+    modalCard.classList.add('translate-y-0');
+  }
+
+  function closeModal() {
+    modalCard.classList.remove('translate-y-0');
+    modalCard.classList.add('translate-y-full');
+    newProjectModal.classList.add('opacity-0');
+    setTimeout(() => {
+      newProjectModal.classList.add('pointer-events-none');
+    }, 250);
+  }
+
+  openNewProjectBtn.addEventListener('click', openModal);
+  closeNewProjectBtn.addEventListener('click', closeModal);
+  cancelModalBtn.addEventListener('click', closeModal);
+
+  newProjectForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    closeModal();
+    alert('Projecto criado com sucesso!');
+    newProjectForm.reset();
+  });
+
+  // Folha: detalhes rápidos
+  const detailsModal = document.getElementById('detailsModal');
+  const detailsCard = document.getElementById('detailsCard');
+  const closeDetailsBtn = document.getElementById('closeDetailsBtn');
+
+  function openDetailsModal(title, desc, percent, tasks, deadline, badgeText) {
+    document.getElementById('detailTitle').textContent = title;
+    document.getElementById('detailDesc').textContent = desc;
+    document.getElementById('detailProgressText').textContent = percent;
+    document.getElementById('detailProgressBar').style.width = percent;
+    document.getElementById('detailTaskCount').textContent = tasks + ' tarefas finalizadas';
+    document.getElementById('detailDeadline').textContent = 'Prazo: ' + deadline;
+    document.getElementById('detailBadge').textContent = badgeText;
+
+    detailsModal.classList.remove('pointer-events-none', 'opacity-0');
+    detailsModal.classList.add('opacity-100');
+    detailsCard.classList.remove('translate-y-full');
+    detailsCard.classList.add('translate-y-0');
+  }
+
+  function closeDetailsModal() {
+    detailsCard.classList.remove('translate-y-0');
+    detailsCard.classList.add('translate-y-full');
+    detailsModal.classList.add('opacity-0');
+    setTimeout(() => {
+      detailsModal.classList.add('pointer-events-none');
+    }, 250);
+  }
+
+  closeDetailsBtn.addEventListener('click', closeDetailsModal);
+</script></main>
+<!-- Barra inferior (activo: Projectos) -->
+<nav class="fixed bottom-0 w-full z-50 pb-safe pointer-events-none" data-active-classes="bg-primary-container text-on-primary font-label-md"><div class="px-margin pb-3 pt-1"><div class="pointer-events-auto h-16 bg-surface-container-lowest/90 backdrop-blur-xl rounded-full shadow-[0_4px_20px_-2px_rgba(16,43,78,0.1),0_2px_6px_-1px_rgba(16,43,78,0.04)] ring-1 ring-outline-variant/20 px-space-xs flex items-center justify-around"><a class="flex items-center justify-center gap-1.5 h-11 px-3.5 rounded-full text-on-surface-variant transition-all" data-path="inicio" href="#"><span class="material-symbols-outlined text-[20px]">home</span><span class="font-label-md text-label-md">Início</span></a><a aria-current="page" class="flex items-center justify-center gap-1.5 h-11 px-3.5 rounded-full transition-all bg-primary-container text-on-primary font-label-md" data-path="projectos" href="#"><span class="material-symbols-outlined text-[20px]">folder</span><span class="font-label-md text-label-md">Projectos</span></a><a class="flex items-center justify-center gap-1.5 h-11 px-3.5 rounded-full text-on-surface-variant transition-all" data-path="tarefas" href="#"><span class="material-symbols-outlined text-[20px]">checklist</span><span class="font-label-md text-label-md">Tarefas</span></a><a class="flex items-center justify-center gap-1.5 h-11 px-3.5 rounded-full text-on-surface-variant transition-all" data-path="perfil" href="#"><span class="material-symbols-outlined text-[20px]">person</span><span class="font-label-md text-label-md">Perfil</span></a></div></div></nav>
+</body></html>

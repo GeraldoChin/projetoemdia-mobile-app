@@ -1,0 +1,2 @@
+# Evita problemas de fim de linha (CRLF) no Windows dentro dos contentores
+* text=auto eol=lf
