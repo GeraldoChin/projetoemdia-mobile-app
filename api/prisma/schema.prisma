@@ -3,8 +3,9 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 enum ProjectStatus {
@@ -39,27 +40,27 @@ enum NotificationType {
 }
 
 model User {
-  id                          String    @id @default(uuid())
-  name                        String
-  email                       String    @unique
-  passwordHash                String
-  refreshTokenHash            String?
-  jobTitle                    String?
-  city                        String?
-  avatarUrl                   String?
-  pushToken                   String?
-  pushEnabled                 Boolean   @default(true)
-  deadlineRemindersEnabled    Boolean   @default(true)
-  language                    String    @default("pt-MZ")
-  createdAt                   DateTime  @default(now())
-  updatedAt                   DateTime  @updatedAt
+  id                       String   @id @default(uuid())
+  name                     String
+  email                    String   @unique
+  passwordHash             String
+  refreshTokenHash         String?
+  jobTitle                 String?
+  city                     String?
+  avatarUrl                String?
+  pushToken                String?
+  pushEnabled              Boolean  @default(true)
+  deadlineRemindersEnabled Boolean  @default(true)
+  language                 String   @default("pt-MZ")
+  createdAt                DateTime @default(now())
+  updatedAt                DateTime @updatedAt
 
-  ownedProjects  Project[]       @relation("ProjectOwner")
-  memberships    ProjectMember[]
-  assignedTasks  Task[]          @relation("TaskAssignee")
-  createdTasks   Task[]          @relation("TaskCreator")
-  comments       Comment[]
-  notifications  Notification[]
+  ownedProjects Project[]       @relation("ProjectOwner")
+  memberships   ProjectMember[]
+  assignedTasks Task[]          @relation("TaskAssignee")
+  createdTasks  Task[]          @relation("TaskCreator")
+  comments      Comment[]
+  notifications Notification[]
 }
 
 model Project {

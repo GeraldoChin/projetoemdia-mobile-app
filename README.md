@@ -25,3 +25,7 @@ npm install
 npx expo start
 ```
 Swagger: http://localhost:3000/docs · Utilizador de teste: `samira.nguenha@empresa.co.mz` / `Segredo123`
+
+## Instalar no Android e usar API online
+
+Os passos para publicar API/PostgreSQL e gerar um APK instalável estão em [`DEPLOYMENT.md`](DEPLOYMENT.md).
