@@ -8,6 +8,9 @@
       "distribution": "internal",
       "channel": "preview",
       "environment": "preview",
+      "env": {
+        "EXPO_PUBLIC_API_URL": "https://projetoemdia-mobile-app.onrender.com/api/v1"
+      },
       "android": {
         "buildType": "apk"
       }
@@ -15,6 +18,9 @@
     "production": {
       "channel": "production",
       "environment": "production",
+      "env": {
+        "EXPO_PUBLIC_API_URL": "https://projetoemdia-mobile-app.onrender.com/api/v1"
+      },
       "autoIncrement": true,
       "android": {
         "buildType": "app-bundle"
